@@ -13,14 +13,14 @@ const userSchema = new mongoose.Schema({
   },
   gender:{
     type: String,
-  }
+  },
   roles:{
     type: mongoose.Schema.Types.ObjectId,
     ref : 'Roles'
-  }
+  },
   mobile:{
      type: String,
-  }
+  },
   email: {
     type: String,
     required: true,
