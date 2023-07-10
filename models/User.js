@@ -5,18 +5,21 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
+    // length
   },
   lastName: {
     type: String,
     required: true,
     trim: true,
+     // length min/max
   },
   gender:{
     type: String,
+    //enum ['male', "female","not to prefer"]
   },
   roles:{
     type: mongoose.Schema.Types.ObjectId,
-    ref : 'Roles'
+    ref : 'Role'
   },
   mobile:{
      type: String,
@@ -30,6 +33,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  _isDeleted :  { type: "boolean", default: false }, //soft delete
   token: {
     type: String,
   },    
