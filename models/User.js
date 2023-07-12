@@ -8,12 +8,12 @@ const userSchema = new mongoose.Schema(
       trim: true,
       // length
     },
-    lastName: {
-      type: String,
-      required: true,
-      trim: true,
-      // length min/max
-    },
+    // lastName: {
+    //   type: String,
+    //   required: true,
+    //   trim: true,
+    //   // length min/max
+    // },
     gender: {
       type: String,
       //enum ['male', "female","not to prefer"]
@@ -44,4 +44,4 @@ const userSchema = new mongoose.Schema(
   { timestamps: true },
 )
 
-module.exports = mongoose.model(user, userSchema)
+module.exports = mongoose.model("user", userSchema)
