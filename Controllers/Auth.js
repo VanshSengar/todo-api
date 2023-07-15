@@ -2,12 +2,14 @@ const bcrypt = require('bcrypt')
 const User = require('../models/User')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
+const validator = require('validator')
 
 // signup route handler
 exports.signup = async (req, res) => {
   try {
     //get data
-    const { firstName, email, password } = req.body
+    const { name, email, password } = req.body
+
     //check if user already exist
     const existingUser = await User.findOne({ email })
 
@@ -17,6 +19,21 @@ exports.signup = async (req, res) => {
         message: 'User already Exists',
       })
     }
+
+    //when email is not given
+    if (!email || !password || !name) {
+      return res.status(403).json({
+        success: false,
+        message: 'All fields are required',
+      })
+    }
+
+    // if (email !== validator.isEmail) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: 'Please Enter a valid Email',
+    //
+    // }
 
     //secure password
     let hashedPassword
@@ -31,7 +48,7 @@ exports.signup = async (req, res) => {
 
     //create entry for User
     const user = await User.create({
-      firstName,
+      name,
       email,
       password: hashedPassword,
     })
@@ -48,8 +65,6 @@ exports.signup = async (req, res) => {
     })
   }
 }
-
-
 
 //login
 exports.login = async (req, res) => {
@@ -80,7 +95,7 @@ exports.login = async (req, res) => {
     }
 
     //verify password & generate a JWT token
-    if (await bcrypt.compare(password,user.password)) {
+    if (await bcrypt.compare(password, user.password)) {
       //password match
       let token = jwt.sign(payload, process.env.JWT_SECRET, {
         expiresIn: '2h',
